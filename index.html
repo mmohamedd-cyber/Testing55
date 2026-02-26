@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Grade 6 ICT Worksheet — Spreadsheets & Word Processing</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:#111a2e;
+      --text:#e9eefc;
+      --muted:#b9c3e6;
+      --accent:#4da3ff;
+      --accent2:#7cffc4;
+      --danger:#ff6b6b;
+      --border: rgba(255,255,255,.12);
+      --shadow: 0 12px 40px rgba(0,0,0,.35);
+      --radius:16px;
+      --radius2:12px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background:
+        radial-gradient(900px 600px at 15% 10%, rgba(77,163,255,.22), transparent 60%),
+        radial-gradient(900px 600px at 90% 25%, rgba(124,255,196,.14), transparent 55%),
+        linear-gradient(180deg, #070b14, var(--bg));
+      color:var(--text);
+      padding:24px;
+    }
+    .wrap{max-width:980px;margin:0 auto}
+    header{
+      display:flex; gap:14px; align-items:flex-start; justify-content:space-between;
+      padding:18px 18px 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .title{display:flex; flex-direction:column; gap:6px;}
+    .title h1{margin:0;font-size:20px;letter-spacing:.2px}
+    .title p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.35}
+    .pill{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 10px;border-radius:999px;
+      background: rgba(77,163,255,.12);
+      border:1px solid rgba(77,163,255,.25);
+      color: var(--text);font-size:12.5px;white-space:nowrap;height:fit-content;
+    }
+    .card{
+      margin-top:16px;
+      background: rgba(255,255,255,.05);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card .card-head{
+      padding:14px 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border-bottom:1px solid var(--border);
+      display:flex; gap:12px; align-items:center; justify-content:space-between;
+    }
+    .card .card-head h2{margin:0;font-size:15px}
+    .hint{color:var(--muted);font-size:12.5px}
+    .card .card-body{padding:18px}
+    .grid{
+      display:grid;grid-template-columns: 1fr 1fr;gap:14px;
+    }
+    @media (max-width:700px){
+      .grid{grid-template-columns:1fr}
+      header{flex-direction:column}
+      .pill{width:fit-content}
+    }
+    label{display:block;font-size:13px;color: var(--muted);margin-bottom:7px;}
+    input[type="text"], textarea{
+      width:100%;
+      padding:12px 12px;border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(17,26,46,.55);
+      color: var(--text);
+      outline:none;
+      transition: border .15s ease, box-shadow .15s ease;
+    }
+    textarea{min-height:92px;resize:vertical}
+    input[type="text"]:focus, textarea:focus{
+      border-color: rgba(77,163,255,.55);
+      box-shadow: 0 0 0 4px rgba(77,163,255,.12);
+    }
+
+    .q{
+      background: rgba(17,26,46,.45);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
+      padding:14px 14px 12px;
+      margin-bottom:12px;
+      position:relative;
+    }
+    .q:last-child{margin-bottom:0}
+    .q .q-top{display:flex; gap:10px; align-items:flex-start; justify-content:space-between; margin-bottom:10px;}
+    .q .q-num{
+      display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;
+      border-radius:10px;
+      background: rgba(124,255,196,.12);
+      border:1px solid rgba(124,255,196,.22);
+      color: var(--text);font-weight:700;flex:0 0 auto;
+    }
+    .q .q-text{margin:0;font-size:14px;line-height:1.35;color:var(--text)}
+    .q .q-sub{margin:6px 0 0;color:var(--muted);font-size:12.5px}
+
+    .choices{
+      display:grid;grid-template-columns: 1fr 1fr;gap:10px;margin-top:10px;
+    }
+    @media (max-width:700px){ .choices{grid-template-columns:1fr} }
+    .choice{
+      display:flex;gap:10px;align-items:flex-start;
+      padding:10px 10px;border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(15,24,48,.55);
+      cursor:pointer;user-select:none;
+      transition: border .15s ease, box-shadow .15s ease;
+    }
+    .choice:hover{
+      border-color: rgba(124,255,196,.28);
+      box-shadow: 0 0 0 4px rgba(124,255,196,.08);
+    }
+    .choice input{margin-top:2px}
+    .choice span{font-size:13.5px;color:var(--text);line-height:1.3}
+
+    .actions{
+      display:flex; gap:12px; align-items:center; justify-content:space-between;
+      margin-top:16px;padding-top:14px;border-top:1px solid var(--border);
+    }
+    button{
+      border:none;border-radius:14px;
+      padding:12px 14px;font-weight:700;cursor:pointer;
+      transition: filter .15s ease, opacity .15s ease;
+    }
+    .btn-primary{
+      background: linear-gradient(90deg, rgba(77,163,255,.95), rgba(124,255,196,.75));
+      color:#07101d;
+    }
+    .btn-ghost{
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      color: var(--text);
+    }
+    .btn-primary[disabled]{opacity:.55;cursor:not-allowed}
+    .status{font-size:13px;color: var(--muted);}
+    .status strong{color: var(--text)}
+
+    /* Validation styles */
+    .invalid{
+      border-color: rgba(255,107,107,.7) !important;
+      box-shadow: 0 0 0 4px rgba(255,107,107,.14) !important;
+    }
+    .q.invalid-block{
+      border-color: rgba(255,107,107,.55);
+      box-shadow: 0 0 0 4px rgba(255,107,107,.08);
+    }
+
+    .msg{
+      display:none;
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      font-size:13px;
+      line-height:1.35;
+    }
+    .msg.show{display:block}
+    .msg.err{
+      border-color: rgba(255,107,107,.35);
+      background: rgba(255,107,107,.10);
+      color:#ffe8e8;
+    }
+    .msg.ok{
+      border-color: rgba(124,255,138,.35);
+      background: rgba(124,255,138,.10);
+      color:#eaffef;
+    }
+
+    .footer-note{margin-top:14px;color: var(--muted);font-size:12.5px;line-height:1.4;}
+    .small{font-size:12px;color:var(--muted)}
+    code.inline{background:rgba(255,255,255,.08);padding:2px 6px;border-radius:8px;border:1px solid rgba(255,255,255,.10)}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="title">
+        <h1>Grade 6 ICT — Interactive Worksheet</h1>
+        <p>Topic: <strong>Spreadsheets</strong> & <strong>Word Processing</strong> • Answer all questions to unlock Submit.</p>
+        <p class="small">Teacher note: paste your Power Automate URL into <code class="inline">FLOW_URL</code> in the script.</p>
+      </div>
+      <div class="pill">Answered: <strong id="answeredCount">0</strong>/12</div>
+    </header>
+
+    <form id="worksheet" class="card" novalidate>
+      <div class="card-head">
+        <h2>Student Details</h2>
+        <div class="hint">First & second name required.</div>
+      </div>
+      <div class="card-body">
+        <div class="grid">
+          <div>
+            <label for="firstName">First name</label>
+            <input type="text" id="firstName" name="firstName" placeholder="e.g., Aisha" autocomplete="given-name" />
+          </div>
+          <div>
+            <label for="secondName">Second name</label>
+            <input type="text" id="secondName" name="secondName" placeholder="e.g., Ahmed" autocomplete="family-name" />
+          </div>
+        </div>
+
+        <div class="msg err" id="formError"></div>
+        <div class="msg ok" id="formSuccess"></div>
+
+        <div class="footer-note">
+          If something is missing, you’ll be taken to the first missing answer.
+        </div>
+      </div>
+    </form>
+
+    <div class="card">
+      <div class="card-head">
+        <h2>Questions (10)</h2>
+        <div class="hint">3 multiple choice + 7 written</div>
+      </div>
+      <div class="card-body">
+        <!-- Q1 MCQ -->
+        <section class="q" data-qblock>
+          <div class="q-top">
+            <div class="q-num">1</div>
+            <div style="flex:1">
+              <p class="q-text">In a spreadsheet, what is a <strong>cell</strong>?</p>
+              <p class="q-sub">Choose one answer.</p>
+            </div>
+          </div>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="q1" value="A" /> <span>A box where a row and column meet</span></label>
+            <label class="choice"><input type="radio" name="q1" value="B" /> <span>A file folder on the computer</span></label>
+            <label class="choice"><input type="radio" name="q1" value="C" /> <span>A type of printer</span></label>
+            <label class="choice"><input type="radio" name="q1" value="D" /> <span>A font style in Word</span></label>
+          </div>
+        </section>
+
+        <!-- Q2 Text -->
+        <section class="q" data-qblock>
+          <div class="q-top">
+            <div class="q-num">2</div>
+            <div style="flex:1">
+              <p class="q-text">Write the cell reference for <strong>column B, row 6</strong>.</p>
+              <p class="q-sub">Example format: A1</p>
+            </div>
+          </div>
+          <input type="text" id="q2" name="q2" placeholder="Type your answer..." />
+        </section>
+
+        <!-- Q3 MCQ -->
+        <section class="q" data-qblock>
+          <div class="q-top">
+            <div class="q-num">3</div>
+            <div style="flex:1">
+              <p class="q-text">Which symbol starts most spreadsheet formulas?</p>
+              <p class="q-sub">Choose one answer.</p>
+            </div>
+          </div>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="q3" value="A" /> <span>@</span></label>
+            <label class="choice"><input type="radio" name="q3" value="B" /> <span>=</span></label>
+            <label class="choice"><input type="radio" name="q3" value="C" /> <span>#</span></label>
+            <label class="choice"><input type="radio" name="q3" value="D" /> <span>!</span></label>
+          </div>
+        </section>
+
+        <!-- Q4 Text -->
+        <section class="q" data-qblock>
+          <div class="q-top">
+            <div class="q-num">4</div>
+            <div style="flex:1">
+              <p class="q-text">Explain what the <strong>SUM</strong> function does in a spreadsheet.</p>
+              <p class="q-sub">One sentence is enough.</p>
+            </div>
+          </div>
+          <textarea id="q4" name="q4" placeholder="Type your answer..."></textarea>
+        </section>
+
+        <!-- Q5 MCQ -->
+        <section class="q" data-qblock>
+          <div class="q-top">
+            <div class="q-num">5</div>
+            <div style="flex:1">
+              <p class="q-text">What is the best tool to make a title stand out in a Word document?</p>
+              <p class="q-sub">Choose one answer.</p>
+            </div>
+          </div>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="q5" value="A" /> <span>Increase font size and use bold (or a heading style)</span></label>
+            <label class="choice"><input type="radio" name="q5" value="B" /> <span>Turn off spell check</span></label>
+            <label class="choice"><input type="radio" name="q5" value="C" /> <span>Delete margins</span></label>
+            <label class="choice"><input type="radio" name="q5" value="D" /> <span>Close the document and reopen it</span></label>
+          </div>
+        </section>
+
+        <!-- Q6 Text -->
+        <section class="q" data-qblock>
+          <div class="q-top">
+            <div class="q-num">6</div>
+            <div style="flex:1">
+              <p class="q-text">In Word, what is a <strong>bullet point</strong> used for?</p>
+              <p class="q-sub">Write a short answer.</p>
+            </div>
+          </div>
+          <input type="text" id="q6" name="q6" placeholder="Type your answer..." />
+        </section>
+
+        <!-- Q7 Text -->
+        <section class="q" data-qblock>
+          <div class="q-top">
+            <div class="q-num">7</div>
+            <div style="flex:1">
+              <p class="q-text">A spreadsheet has names in column A and test scores in column B. What would you do to find the <strong>highest score</strong>?</p>
+              <p class="q-sub">You can name a function or a feature.</p>
+            </div>
+          </div>
+          <textarea id="q7" name="q7" placeholder="Type your answer..."></textarea>
+        </section>
+
+        <!-- Q8 MCQ -->
+        <section class="q" data-qblock>
+          <div class="q-top">
+            <div class="q-num">8</div>
+            <div style="flex:1">
+              <p class="q-text">What does <strong>copy &amp; paste</strong> do?</p>
+              <p class="q-sub">Choose one answer.</p>
+            </div>
+          </div>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="q8" value="A" /> <span>Moves text and deletes the original</span></label>
+            <label class="choice"><input type="radio" name="q8" value="B" /> <span>Makes a duplicate of text/data and puts it somewhere else</span></label>
+            <label class="choice"><input type="radio" name="q8" value="C" /> <span>Turns text into a table</span></label>
+            <label class="choice"><input type="radio" name="q8" value="D" /> <span>Changes font to italic</span></label>
+          </div>
+        </section>
+
+        <!-- Q9 Text -->
+        <section class="q" data-qblock>
+          <div class="q-top">
+            <div class="q-num">9</div>
+            <div style="flex:1">
+              <p class="q-text">Why is it useful to use a <strong>table</strong> in Word?</p>
+              <p class="q-sub">Write one benefit.</p>
+            </div>
+          </div>
+          <input type="text" id="q9" name="q9" placeholder="Type your answer..." />
+        </section>
+
+        <!-- Q10 Text -->
+        <section class="q" data-qblock>
+          <div class="q-top">
+            <div class="q-num">10</div>
+            <div style="flex:1">
+              <p class="q-text">Describe one way to make a spreadsheet easier to read.</p>
+              <p class="q-sub">Example ideas: formatting, headings, colours, borders, alignment.</p>
+            </div>
+          </div>
+          <textarea id="q10" name="q10" placeholder="Type your answer..."></textarea>
+        </section>
+
+        <div class="actions">
+          <div class="status" id="statusText">Complete all fields to enable <strong>Submit</strong>.</div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end">
+            <button type="button" class="btn-ghost" id="clearBtn">Clear</button>
+            <button type="button" class="btn-primary" id="submitBtn" disabled>Submit</button>
+          </div>
+        </div>
+
+        <div class="msg err" id="questionError"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /***********************
+     *  POWER AUTOMATE SETUP
+     *  1) Create a Flow with trigger: "When an HTTP request is received"
+     *  2) Add action: Excel Online (Business) -> Add a row into a table
+     *  3) Map columns to these payload fields:
+     *     Timestamp, FirstName, SecondName, FullName, Worksheet, Q1..Q10 (or keep AnswersJSON)
+     ***********************/
+    const FLOW_URL = "https://default5c6e621cef2549fb9a1c63eb5278af.71.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/e32282c2f45b4d9f99ed13c5e575cff5/triggers/manual/paths/invoke?api-version=1"; // <-- paste your Flow URL
+
+    // ---- Elements ----
+    const firstName = document.getElementById("firstName");
+    const secondName = document.getElementById("secondName");
+    const submitBtn = document.getElementById("submitBtn");
+    const clearBtn = document.getElementById("clearBtn");
+
+    const formError = document.getElementById("formError");
+    const questionError = document.getElementById("questionError");
+    const formSuccess = document.getElementById("formSuccess");
+
+    const answeredCountEl = document.getElementById("answeredCount");
+    const statusText = document.getElementById("statusText");
+
+    // 2 names + 10 questions = 12 required
+    const TOTAL_REQUIRED = 12;
+
+    // ---- Helpers ----
+    function val(id){ return (document.getElementById(id).value || "").trim(); }
+    function isNonEmpty(el){ return (el.value || "").trim().length > 0; }
+    function radioVal(name){
+      const el = document.querySelector(`input[type="radio"][name="${CSS.escape(name)}"]:checked`);
+      return el ? el.value : "";
+    }
+
+    function clearMessages(){
+      [formError, questionError, formSuccess].forEach(m => {
+        m.classList.remove("show");
+        m.textContent = "";
+      });
+    }
+    function setInvalid(el, on){ if (on) el.classList.add("invalid"); else el.classList.remove("invalid"); }
+    function setBlockInvalid(block, on){ if (on) block.classList.add("invalid-block"); else block.classList.remove("invalid-block"); }
+
+    function scrollToEl(el){
+      if (!el) return;
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      if (typeof el.focus === "function") setTimeout(() => el.focus({preventScroll:true}), 200);
+    }
+
+    function isRadioAnswered(name){ return !!document.querySelector(`input[type="radio"][name="${CSS.escape(name)}"]:checked`); }
+
+    function computeAnswered(){
+      let n = 0;
+      if (isNonEmpty(firstName)) n++;
+      if (isNonEmpty(secondName)) n++;
+      if (isRadioAnswered("q1")) n++;
+      if (val("q2")) n++;
+      if (isRadioAnswered("q3")) n++;
+      if (val("q4")) n++;
+      if (isRadioAnswered("q5")) n++;
+      if (val("q6")) n++;
+      if (val("q7")) n++;
+      if (isRadioAnswered("q8")) n++;
+      if (val("q9")) n++;
+      if (val("q10")) n++;
+      return n;
+    }
+
+    function updateProgress(){
+      const answered = computeAnswered();
+      answeredCountEl.textContent = String(answered);
+      const ready = answered === TOTAL_REQUIRED && FLOW_URL && !FLOW_URL.includes("PASTE_YOUR_POWER_AUTOMATE");
+      submitBtn.disabled = !ready;
+
+      if (!FLOW_URL || FLOW_URL.includes("PASTE_YOUR_POWER_AUTOMATE")) {
+        statusText.innerHTML = `Teacher: paste your Power Automate URL to enable <strong>Submit</strong>.`;
+        return;
+      }
+
+      statusText.innerHTML = (answered === TOTAL_REQUIRED)
+        ? `All done! You can now <strong>Submit</strong>.`
+        : `Complete all fields to enable <strong>Submit</strong>. (${answered}/${TOTAL_REQUIRED})`;
+    }
+
+    function validateAll(){
+      clearMessages();
+      // clear old styles
+      document.querySelectorAll(".invalid").forEach(el => el.classList.remove("invalid"));
+      document.querySelectorAll("[data-qblock].invalid-block").forEach(el => el.classList.remove("invalid-block"));
+
+      const missing = [];
+
+      // Names
+      if (!isNonEmpty(firstName)) { setInvalid(firstName, true); missing.push({ el:firstName, msg:"First name", type:"name" }); }
+      if (!isNonEmpty(secondName)) { setInvalid(secondName, true); missing.push({ el:secondName, msg:"Second name", type:"name" }); }
+
+      const blocks = Array.from(document.querySelectorAll("[data-qblock]"));
+
+      // Q1 radio
+      if (!isRadioAnswered("q1")) { setBlockInvalid(blocks[0], true); missing.push({ el:blocks[0], msg:"Question 1", type:"q" }); }
+      // Q2
+      if (!val("q2")) { setBlockInvalid(blocks[1], true); setInvalid(document.getElementById("q2"), true); missing.push({ el:document.getElementById("q2"), msg:"Question 2", type:"q" }); }
+      // Q3 radio
+      if (!isRadioAnswered("q3")) { setBlockInvalid(blocks[2], true); missing.push({ el:blocks[2], msg:"Question 3", type:"q" }); }
+      // Q4
+      if (!val("q4")) { setBlockInvalid(blocks[3], true); setInvalid(document.getElementById("q4"), true); missing.push({ el:document.getElementById("q4"), msg:"Question 4", type:"q" }); }
+      // Q5 radio
+      if (!isRadioAnswered("q5")) { setBlockInvalid(blocks[4], true); missing.push({ el:blocks[4], msg:"Question 5", type:"q" }); }
+      // Q6
+      if (!val("q6")) { setBlockInvalid(blocks[5], true); setInvalid(document.getElementById("q6"), true); missing.push({ el:document.getElementById("q6"), msg:"Question 6", type:"q" }); }
+      // Q7
+      if (!val("q7")) { setBlockInvalid(blocks[6], true); setInvalid(document.getElementById("q7"), true); missing.push({ el:document.getElementById("q7"), msg:"Question 7", type:"q" }); }
+      // Q8 radio
+      if (!isRadioAnswered("q8")) { setBlockInvalid(blocks[7], true); missing.push({ el:blocks[7], msg:"Question 8", type:"q" }); }
+      // Q9
+      if (!val("q9")) { setBlockInvalid(blocks[8], true); setInvalid(document.getElementById("q9"), true); missing.push({ el:document.getElementById("q9"), msg:"Question 9", type:"q" }); }
+      // Q10
+      if (!val("q10")) { setBlockInvalid(blocks[9], true); setInvalid(document.getElementById("q10"), true); missing.push({ el:document.getElementById("q10"), msg:"Question 10", type:"q" }); }
+
+      if (missing.length){
+        const first = missing[0];
+        if (first.type === "name"){
+          formError.textContent = `Please fill in: ${missing.filter(m=>m.type==="name").map(m=>m.msg).join(", ")}.`;
+          formError.classList.add("show");
+        } else {
+          questionError.textContent = `Please answer all questions. Missing: ${missing.filter(m=>m.type==="q").map(m=>m.msg).join(", ")}.`;
+          questionError.classList.add("show");
+        }
+        scrollToEl(first.el);
+        return false;
+      }
+      return true;
+    }
+
+    function buildPayload(){
+      const fn = firstName.value.trim();
+      const sn = secondName.value.trim();
+      const fullName = `${fn} ${sn}`.trim();
+
+      // Send BOTH per-column answers and an AnswersJSON (handy for auditing)
+      const answers = {
+        q1: radioVal("q1"),
+        q2: val("q2"),
+        q3: radioVal("q3"),
+        q4: val("q4"),
+        q5: radioVal("q5"),
+        q6: val("q6"),
+        q7: val("q7"),
+        q8: radioVal("q8"),
+        q9: val("q9"),
+        q10: val("q10")
+      };
+
+      return {
+        timestamp: new Date().toISOString(),
+        firstName: fn,
+        secondName: sn,
+        fullName,
+        worksheet: document.title || "Worksheet",
+        // Per-column (map these in Excel)
+        ...answers,
+        // Optional: store one JSON field too
+        answersJson: JSON.stringify(answers)
+      };
+    }
+
+    async function submitToFlow(payload){
+      // NOTE: Some tenants require the Flow URL to end with: ?code=... (keep it exactly as provided)
+      const res = await fetch(FLOW_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      return res;
+    }
+
+    // ---- Wire events ----
+    function wireProgressEvents(){
+      document.querySelectorAll('input[type="text"], textarea').forEach(el => {
+        el.addEventListener("input", () => {
+          if ((el.value||"").trim()) el.classList.remove("invalid");
+          updateProgress();
+        });
+        el.addEventListener("blur", () => {
+          if (!((el.value||"").trim())) el.classList.add("invalid");
+        });
+      });
+      document.querySelectorAll('input[type="radio"]').forEach(el => {
+        el.addEventListener("change", () => {
+          const block = el.closest("[data-qblock]");
+          if (block) block.classList.remove("invalid-block");
+          updateProgress();
+        });
+      });
+    }
+
+    submitBtn.addEventListener("click", async () => {
+      formSuccess.classList.remove("show");
+      const ok = validateAll();
+      updateProgress();
+      if (!ok) return;
+
+      if (!FLOW_URL || FLOW_URL.includes("PASTE_YOUR_POWER_AUTOMATE")) {
+        formError.textContent = "Teacher: Power Automate URL not set yet.";
+        formError.classList.add("show");
+        scrollToEl(formError);
+        return;
+      }
+
+      // Lock UI while submitting
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Submitting...";
+
+      try{
+        const payload = buildPayload();
+        const res = await submitToFlow(payload);
+
+        if (!res.ok){
+          // Show more helpful errors when possible
+          let extra = "";
+          try { extra = await res.text(); } catch {}
+          throw new Error(`Submission failed (HTTP ${res.status}). ${extra}`.trim());
+        }
+
+        formSuccess.textContent = "✅ Submitted successfully! You can close this page now.";
+        formSuccess.classList.add("show");
+        scrollToEl(formSuccess);
+
+        // Optional: prevent double submits by disabling everything
+        document.querySelectorAll("input, textarea, button").forEach(el => {
+          if (el.id !== "clearBtn") el.disabled = true;
+        });
+      } catch(e){
+        console.error(e);
+        questionError.textContent = "❌ Submit failed. Please check your internet and try again. (If it keeps failing, tell your teacher.)";
+        questionError.classList.add("show");
+        scrollToEl(questionError);
+      } finally{
+        // If submit failed, re-enable button (if still valid)
+        if (!document.querySelectorAll("input, textarea, button")[0].disabled) {
+          submitBtn.textContent = "Submit";
+          updateProgress();
+        }
+      }
+    });
+
+    clearBtn.addEventListener("click", () => {
+      if (!confirm("Clear all answers?")) return;
+      document.querySelectorAll('input[type="text"], textarea').forEach(el => el.value = "");
+      document.querySelectorAll('input[type="radio"]').forEach(el => el.checked = false);
+      clearMessages();
+      document.querySelectorAll(".invalid").forEach(el => el.classList.remove("invalid"));
+      document.querySelectorAll("[data-qblock].invalid-block").forEach(el => el.classList.remove("invalid-block"));
+      submitBtn.textContent = "Submit";
+      updateProgress();
+      window.scrollTo({top:0, behavior:"smooth"});
+    });
+
+    // Init
+    wireProgressEvents();
+    updateProgress();
+  </script>
+</body>
+</html>
