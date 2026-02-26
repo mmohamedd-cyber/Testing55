@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Grade 6 ICT Worksheet — Spreadsheets & Word Processing</title>
+
   <style>
     :root{
       --bg:#0b1220;
@@ -48,6 +49,7 @@
       border:1px solid rgba(77,163,255,.25);
       color: var(--text);font-size:12.5px;white-space:nowrap;height:fit-content;
     }
+
     .card{
       margin-top:16px;
       background: rgba(255,255,255,.05);
@@ -65,9 +67,8 @@
     .card .card-head h2{margin:0;font-size:15px}
     .hint{color:var(--muted);font-size:12.5px}
     .card .card-body{padding:18px}
-    .grid{
-      display:grid;grid-template-columns: 1fr 1fr;gap:14px;
-    }
+
+    .grid{display:grid;grid-template-columns: 1fr 1fr;gap:14px;}
     @media (max-width:700px){
       .grid{grid-template-columns:1fr}
       header{flex-direction:column}
@@ -109,9 +110,7 @@
     .q .q-text{margin:0;font-size:14px;line-height:1.35;color:var(--text)}
     .q .q-sub{margin:6px 0 0;color:var(--muted);font-size:12.5px}
 
-    .choices{
-      display:grid;grid-template-columns: 1fr 1fr;gap:10px;margin-top:10px;
-    }
+    .choices{display:grid;grid-template-columns: 1fr 1fr;gap:10px;margin-top:10px;}
     @media (max-width:700px){ .choices{grid-template-columns:1fr} }
     .choice{
       display:flex;gap:10px;align-items:flex-start;
@@ -135,7 +134,7 @@
     button{
       border:none;border-radius:14px;
       padding:12px 14px;font-weight:700;cursor:pointer;
-      transition: filter .15s ease, opacity .15s ease;
+      transition: opacity .15s ease;
     }
     .btn-primary{
       background: linear-gradient(90deg, rgba(77,163,255,.95), rgba(124,255,196,.75));
@@ -150,7 +149,6 @@
     .status{font-size:13px;color: var(--muted);}
     .status strong{color: var(--text)}
 
-    /* Validation styles */
     .invalid{
       border-color: rgba(255,107,107,.7) !important;
       box-shadow: 0 0 0 4px rgba(255,107,107,.14) !important;
@@ -162,8 +160,8 @@
 
     .msg{
       display:none;
-      margin-top:10px;
-      padding:10px 12px;
+      margin-top:12px;
+      padding:12px 14px;
       border-radius: 14px;
       border:1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.06);
@@ -183,7 +181,6 @@
       color:#eaffef;
     }
 
-    .footer-note{margin-top:14px;color: var(--muted);font-size:12.5px;line-height:1.4;}
     .small{font-size:12px;color:var(--muted)}
     code.inline{background:rgba(255,255,255,.08);padding:2px 6px;border-radius:8px;border:1px solid rgba(255,255,255,.10)}
   </style>
@@ -194,37 +191,33 @@
     <header>
       <div class="title">
         <h1>Grade 6 ICT — Interactive Worksheet</h1>
-        <p>Topic: <strong>Spreadsheets</strong> & <strong>Word Processing</strong> • Answer all questions to unlock Submit.</p>
-        <p class="small">Teacher note: paste your Power Automate URL into <code class="inline">FLOW_URL</code> in the script.</p>
+        <p>Topic: <strong>Spreadsheets</strong> & <strong>Word Processing</strong></p>
+        <p class="small">When you press <strong>Submit</strong>, your answers are saved automatically.</p>
       </div>
       <div class="pill">Answered: <strong id="answeredCount">0</strong>/12</div>
     </header>
 
-    <form id="worksheet" class="card" novalidate>
+    <div class="card">
       <div class="card-head">
         <h2>Student Details</h2>
-        <div class="hint">First & second name required.</div>
+        <div class="hint">Both names are required.</div>
       </div>
       <div class="card-body">
         <div class="grid">
           <div>
             <label for="firstName">First name</label>
-            <input type="text" id="firstName" name="firstName" placeholder="e.g., Aisha" autocomplete="given-name" />
+            <input type="text" id="firstName" placeholder="e.g., Aisha" />
           </div>
           <div>
             <label for="secondName">Second name</label>
-            <input type="text" id="secondName" name="secondName" placeholder="e.g., Ahmed" autocomplete="family-name" />
+            <input type="text" id="secondName" placeholder="e.g., Ahmed" />
           </div>
         </div>
 
-        <div class="msg err" id="formError"></div>
-        <div class="msg ok" id="formSuccess"></div>
-
-        <div class="footer-note">
-          If something is missing, you’ll be taken to the first missing answer.
-        </div>
+        <div class="msg err" id="topError"></div>
+        <div class="msg ok" id="topSuccess"></div>
       </div>
-    </form>
+    </div>
 
     <div class="card">
       <div class="card-head">
@@ -232,6 +225,7 @@
         <div class="hint">3 multiple choice + 7 written</div>
       </div>
       <div class="card-body">
+
         <!-- Q1 MCQ -->
         <section class="q" data-qblock>
           <div class="q-top">
@@ -249,7 +243,7 @@
           </div>
         </section>
 
-        <!-- Q2 Text -->
+        <!-- Q2 -->
         <section class="q" data-qblock>
           <div class="q-top">
             <div class="q-num">2</div>
@@ -258,7 +252,7 @@
               <p class="q-sub">Example format: A1</p>
             </div>
           </div>
-          <input type="text" id="q2" name="q2" placeholder="Type your answer..." />
+          <input type="text" id="q2" placeholder="Type your answer..." />
         </section>
 
         <!-- Q3 MCQ -->
@@ -278,7 +272,7 @@
           </div>
         </section>
 
-        <!-- Q4 Text -->
+        <!-- Q4 -->
         <section class="q" data-qblock>
           <div class="q-top">
             <div class="q-num">4</div>
@@ -287,7 +281,7 @@
               <p class="q-sub">One sentence is enough.</p>
             </div>
           </div>
-          <textarea id="q4" name="q4" placeholder="Type your answer..."></textarea>
+          <textarea id="q4" placeholder="Type your answer..."></textarea>
         </section>
 
         <!-- Q5 MCQ -->
@@ -307,7 +301,7 @@
           </div>
         </section>
 
-        <!-- Q6 Text -->
+        <!-- Q6 -->
         <section class="q" data-qblock>
           <div class="q-top">
             <div class="q-num">6</div>
@@ -316,10 +310,10 @@
               <p class="q-sub">Write a short answer.</p>
             </div>
           </div>
-          <input type="text" id="q6" name="q6" placeholder="Type your answer..." />
+          <input type="text" id="q6" placeholder="Type your answer..." />
         </section>
 
-        <!-- Q7 Text -->
+        <!-- Q7 -->
         <section class="q" data-qblock>
           <div class="q-top">
             <div class="q-num">7</div>
@@ -328,7 +322,7 @@
               <p class="q-sub">You can name a function or a feature.</p>
             </div>
           </div>
-          <textarea id="q7" name="q7" placeholder="Type your answer..."></textarea>
+          <textarea id="q7" placeholder="Type your answer..."></textarea>
         </section>
 
         <!-- Q8 MCQ -->
@@ -348,7 +342,7 @@
           </div>
         </section>
 
-        <!-- Q9 Text -->
+        <!-- Q9 -->
         <section class="q" data-qblock>
           <div class="q-top">
             <div class="q-num">9</div>
@@ -357,19 +351,19 @@
               <p class="q-sub">Write one benefit.</p>
             </div>
           </div>
-          <input type="text" id="q9" name="q9" placeholder="Type your answer..." />
+          <input type="text" id="q9" placeholder="Type your answer..." />
         </section>
 
-        <!-- Q10 Text -->
+        <!-- Q10 -->
         <section class="q" data-qblock>
           <div class="q-top">
             <div class="q-num">10</div>
             <div style="flex:1">
               <p class="q-text">Describe one way to make a spreadsheet easier to read.</p>
-              <p class="q-sub">Example ideas: formatting, headings, colours, borders, alignment.</p>
+              <p class="q-sub">Example: headings, borders, alignment, colours, formatting.</p>
             </div>
           </div>
-          <textarea id="q10" name="q10" placeholder="Type your answer..."></textarea>
+          <textarea id="q10" placeholder="Type your answer..."></textarea>
         </section>
 
         <div class="actions">
@@ -380,271 +374,250 @@
           </div>
         </div>
 
-        <div class="msg err" id="questionError"></div>
+        <div class="msg err" id="bottomError"></div>
       </div>
     </div>
   </div>
 
-  <script>
-    /***********************
-     *  POWER AUTOMATE SETUP
-     *  1) Create a Flow with trigger: "When an HTTP request is received"
-     *  2) Add action: Excel Online (Business) -> Add a row into a table
-     *  3) Map columns to these payload fields:
-     *     Timestamp, FirstName, SecondName, FullName, Worksheet, Q1..Q10 (or keep AnswersJSON)
-     ***********************/
-    const FLOW_URL = "https://default5c6e621cef2549fb9a1c63eb5278af.71.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/e32282c2f45b4d9f99ed13c5e575cff5/triggers/manual/paths/invoke?api-version=1"; // <-- paste your Flow URL
+  <!-- EVERYTHING (Firebase + Submit Logic) is below -->
+  <script type="module">
+    // ---------------------------
+    // Firebase Firestore (GitHub Pages compatible)
+    // ---------------------------
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
-    // ---- Elements ----
+    const firebaseConfig = {
+      apiKey: "AIzaSyCyjHGKmWqtvRn6ikJxWQeCAocbGIZqS3Y",
+      authDomain: "mmmm-7a485.firebaseapp.com",
+      projectId: "mmmm-7a485",
+      storageBucket: "mmmm-7a485.firebasestorage.app",
+      messagingSenderId: "177735973547",
+      appId: "1:177735973547:web:0d9ea6f476b886ab6195ee",
+      measurementId: "G-6L8D7VD967"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function saveToFirestore(payload) {
+      await addDoc(collection(db, "submissions"), {
+        ...payload,
+        createdAt: serverTimestamp(),
+        pageUrl: location.href
+      });
+    }
+
+    // ---------------------------
+    // Worksheet logic
+    // ---------------------------
     const firstName = document.getElementById("firstName");
     const secondName = document.getElementById("secondName");
     const submitBtn = document.getElementById("submitBtn");
     const clearBtn = document.getElementById("clearBtn");
-
-    const formError = document.getElementById("formError");
-    const questionError = document.getElementById("questionError");
-    const formSuccess = document.getElementById("formSuccess");
-
     const answeredCountEl = document.getElementById("answeredCount");
     const statusText = document.getElementById("statusText");
 
-    // 2 names + 10 questions = 12 required
-    const TOTAL_REQUIRED = 12;
+    const topError = document.getElementById("topError");
+    const bottomError = document.getElementById("bottomError");
+    const topSuccess = document.getElementById("topSuccess");
 
-    // ---- Helpers ----
-    function val(id){ return (document.getElementById(id).value || "").trim(); }
-    function isNonEmpty(el){ return (el.value || "").trim().length > 0; }
-    function radioVal(name){
-      const el = document.querySelector(`input[type="radio"][name="${CSS.escape(name)}"]:checked`);
-      return el ? el.value : "";
+    const TOTAL_REQUIRED = 12; // 2 names + 10 answers
+
+    function msg(el, text, type) {
+      el.textContent = text;
+      el.classList.remove("show", "err", "ok");
+      if (text) {
+        el.classList.add("show");
+        el.classList.add(type);
+      }
     }
 
-    function clearMessages(){
-      [formError, questionError, formSuccess].forEach(m => {
-        m.classList.remove("show");
-        m.textContent = "";
-      });
+    function clearMsgs() {
+      msg(topError, "", "err");
+      msg(bottomError, "", "err");
+      msg(topSuccess, "", "ok");
     }
-    function setInvalid(el, on){ if (on) el.classList.add("invalid"); else el.classList.remove("invalid"); }
-    function setBlockInvalid(block, on){ if (on) block.classList.add("invalid-block"); else block.classList.remove("invalid-block"); }
 
-    function scrollToEl(el){
-      if (!el) return;
+    function isNonEmptyValue(v) { return (v || "").trim().length > 0; }
+    function isNonEmpty(el) { return isNonEmptyValue(el.value); }
+
+    function radioChecked(name) {
+      return document.querySelector(`input[name="${CSS.escape(name)}"]:checked`);
+    }
+
+    function setInvalid(el, on) { on ? el.classList.add("invalid") : el.classList.remove("invalid"); }
+    function setBlockInvalid(block, on) { on ? block.classList.add("invalid-block") : block.classList.remove("invalid-block"); }
+
+    function scrollTo(el) {
       el.scrollIntoView({ behavior: "smooth", block: "center" });
-      if (typeof el.focus === "function") setTimeout(() => el.focus({preventScroll:true}), 200);
+      if (typeof el.focus === "function") setTimeout(() => el.focus({ preventScroll: true }), 200);
     }
 
-    function isRadioAnswered(name){ return !!document.querySelector(`input[type="radio"][name="${CSS.escape(name)}"]:checked`); }
-
-    function computeAnswered(){
+    function computeAnswered() {
       let n = 0;
       if (isNonEmpty(firstName)) n++;
       if (isNonEmpty(secondName)) n++;
-      if (isRadioAnswered("q1")) n++;
-      if (val("q2")) n++;
-      if (isRadioAnswered("q3")) n++;
-      if (val("q4")) n++;
-      if (isRadioAnswered("q5")) n++;
-      if (val("q6")) n++;
-      if (val("q7")) n++;
-      if (isRadioAnswered("q8")) n++;
-      if (val("q9")) n++;
-      if (val("q10")) n++;
+
+      if (radioChecked("q1")) n++;
+      if (isNonEmptyValue(document.getElementById("q2").value)) n++;
+      if (radioChecked("q3")) n++;
+      if (isNonEmptyValue(document.getElementById("q4").value)) n++;
+      if (radioChecked("q5")) n++;
+      if (isNonEmptyValue(document.getElementById("q6").value)) n++;
+      if (isNonEmptyValue(document.getElementById("q7").value)) n++;
+      if (radioChecked("q8")) n++;
+      if (isNonEmptyValue(document.getElementById("q9").value)) n++;
+      if (isNonEmptyValue(document.getElementById("q10").value)) n++;
+
       return n;
     }
 
-    function updateProgress(){
+    function updateProgress() {
       const answered = computeAnswered();
       answeredCountEl.textContent = String(answered);
-      const ready = answered === TOTAL_REQUIRED && FLOW_URL && !FLOW_URL.includes("PASTE_YOUR_POWER_AUTOMATE");
+
+      const ready = answered === TOTAL_REQUIRED;
       submitBtn.disabled = !ready;
 
-      if (!FLOW_URL || FLOW_URL.includes("PASTE_YOUR_POWER_AUTOMATE")) {
-        statusText.innerHTML = `Teacher: paste your Power Automate URL to enable <strong>Submit</strong>.`;
-        return;
-      }
-
-      statusText.innerHTML = (answered === TOTAL_REQUIRED)
+      statusText.innerHTML = ready
         ? `All done! You can now <strong>Submit</strong>.`
         : `Complete all fields to enable <strong>Submit</strong>. (${answered}/${TOTAL_REQUIRED})`;
     }
 
-    function validateAll(){
-      clearMessages();
-      // clear old styles
-      document.querySelectorAll(".invalid").forEach(el => el.classList.remove("invalid"));
-      document.querySelectorAll("[data-qblock].invalid-block").forEach(el => el.classList.remove("invalid-block"));
-
-      const missing = [];
-
-      // Names
-      if (!isNonEmpty(firstName)) { setInvalid(firstName, true); missing.push({ el:firstName, msg:"First name", type:"name" }); }
-      if (!isNonEmpty(secondName)) { setInvalid(secondName, true); missing.push({ el:secondName, msg:"Second name", type:"name" }); }
-
-      const blocks = Array.from(document.querySelectorAll("[data-qblock]"));
-
-      // Q1 radio
-      if (!isRadioAnswered("q1")) { setBlockInvalid(blocks[0], true); missing.push({ el:blocks[0], msg:"Question 1", type:"q" }); }
-      // Q2
-      if (!val("q2")) { setBlockInvalid(blocks[1], true); setInvalid(document.getElementById("q2"), true); missing.push({ el:document.getElementById("q2"), msg:"Question 2", type:"q" }); }
-      // Q3 radio
-      if (!isRadioAnswered("q3")) { setBlockInvalid(blocks[2], true); missing.push({ el:blocks[2], msg:"Question 3", type:"q" }); }
-      // Q4
-      if (!val("q4")) { setBlockInvalid(blocks[3], true); setInvalid(document.getElementById("q4"), true); missing.push({ el:document.getElementById("q4"), msg:"Question 4", type:"q" }); }
-      // Q5 radio
-      if (!isRadioAnswered("q5")) { setBlockInvalid(blocks[4], true); missing.push({ el:blocks[4], msg:"Question 5", type:"q" }); }
-      // Q6
-      if (!val("q6")) { setBlockInvalid(blocks[5], true); setInvalid(document.getElementById("q6"), true); missing.push({ el:document.getElementById("q6"), msg:"Question 6", type:"q" }); }
-      // Q7
-      if (!val("q7")) { setBlockInvalid(blocks[6], true); setInvalid(document.getElementById("q7"), true); missing.push({ el:document.getElementById("q7"), msg:"Question 7", type:"q" }); }
-      // Q8 radio
-      if (!isRadioAnswered("q8")) { setBlockInvalid(blocks[7], true); missing.push({ el:blocks[7], msg:"Question 8", type:"q" }); }
-      // Q9
-      if (!val("q9")) { setBlockInvalid(blocks[8], true); setInvalid(document.getElementById("q9"), true); missing.push({ el:document.getElementById("q9"), msg:"Question 9", type:"q" }); }
-      // Q10
-      if (!val("q10")) { setBlockInvalid(blocks[9], true); setInvalid(document.getElementById("q10"), true); missing.push({ el:document.getElementById("q10"), msg:"Question 10", type:"q" }); }
-
-      if (missing.length){
-        const first = missing[0];
-        if (first.type === "name"){
-          formError.textContent = `Please fill in: ${missing.filter(m=>m.type==="name").map(m=>m.msg).join(", ")}.`;
-          formError.classList.add("show");
-        } else {
-          questionError.textContent = `Please answer all questions. Missing: ${missing.filter(m=>m.type==="q").map(m=>m.msg).join(", ")}.`;
-          questionError.classList.add("show");
-        }
-        scrollToEl(first.el);
-        return false;
-      }
-      return true;
-    }
-
-    function buildPayload(){
+    function buildPayload() {
       const fn = firstName.value.trim();
       const sn = secondName.value.trim();
-      const fullName = `${fn} ${sn}`.trim();
-
-      // Send BOTH per-column answers and an AnswersJSON (handy for auditing)
-      const answers = {
-        q1: radioVal("q1"),
-        q2: val("q2"),
-        q3: radioVal("q3"),
-        q4: val("q4"),
-        q5: radioVal("q5"),
-        q6: val("q6"),
-        q7: val("q7"),
-        q8: radioVal("q8"),
-        q9: val("q9"),
-        q10: val("q10")
-      };
 
       return {
         timestamp: new Date().toISOString(),
         firstName: fn,
         secondName: sn,
-        fullName,
+        fullName: `${fn} ${sn}`.trim(),
         worksheet: document.title || "Worksheet",
-        // Per-column (map these in Excel)
-        ...answers,
-        // Optional: store one JSON field too
-        answersJson: JSON.stringify(answers)
+
+        q1: radioChecked("q1")?.value || "",
+        q2: document.getElementById("q2").value.trim(),
+        q3: radioChecked("q3")?.value || "",
+        q4: document.getElementById("q4").value.trim(),
+        q5: radioChecked("q5")?.value || "",
+        q6: document.getElementById("q6").value.trim(),
+        q7: document.getElementById("q7").value.trim(),
+        q8: radioChecked("q8")?.value || "",
+        q9: document.getElementById("q9").value.trim(),
+        q10: document.getElementById("q10").value.trim()
       };
     }
 
-    async function submitToFlow(payload){
-      // NOTE: Some tenants require the Flow URL to end with: ?code=... (keep it exactly as provided)
-      const res = await fetch(FLOW_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-      return res;
+    function validateAll() {
+      clearMsgs();
+
+      // clear all previous red highlights
+      document.querySelectorAll(".invalid").forEach(el => el.classList.remove("invalid"));
+      document.querySelectorAll("[data-qblock].invalid-block").forEach(el => el.classList.remove("invalid-block"));
+
+      const missing = [];
+      const blocks = Array.from(document.querySelectorAll("[data-qblock]"));
+
+      if (!isNonEmpty(firstName)) { setInvalid(firstName, true); missing.push({ el: firstName, label: "First name" }); }
+      if (!isNonEmpty(secondName)) { setInvalid(secondName, true); missing.push({ el: secondName, label: "Second name" }); }
+
+      // Q1
+      if (!radioChecked("q1")) { setBlockInvalid(blocks[0], true); missing.push({ el: blocks[0], label: "Question 1" }); }
+      // Q2
+      const q2 = document.getElementById("q2");
+      if (!isNonEmpty(q2)) { setBlockInvalid(blocks[1], true); setInvalid(q2, true); missing.push({ el: q2, label: "Question 2" }); }
+      // Q3
+      if (!radioChecked("q3")) { setBlockInvalid(blocks[2], true); missing.push({ el: blocks[2], label: "Question 3" }); }
+      // Q4
+      const q4 = document.getElementById("q4");
+      if (!isNonEmpty(q4)) { setBlockInvalid(blocks[3], true); setInvalid(q4, true); missing.push({ el: q4, label: "Question 4" }); }
+      // Q5
+      if (!radioChecked("q5")) { setBlockInvalid(blocks[4], true); missing.push({ el: blocks[4], label: "Question 5" }); }
+      // Q6
+      const q6 = document.getElementById("q6");
+      if (!isNonEmpty(q6)) { setBlockInvalid(blocks[5], true); setInvalid(q6, true); missing.push({ el: q6, label: "Question 6" }); }
+      // Q7
+      const q7 = document.getElementById("q7");
+      if (!isNonEmpty(q7)) { setBlockInvalid(blocks[6], true); setInvalid(q7, true); missing.push({ el: q7, label: "Question 7" }); }
+      // Q8
+      if (!radioChecked("q8")) { setBlockInvalid(blocks[7], true); missing.push({ el: blocks[7], label: "Question 8" }); }
+      // Q9
+      const q9 = document.getElementById("q9");
+      if (!isNonEmpty(q9)) { setBlockInvalid(blocks[8], true); setInvalid(q9, true); missing.push({ el: q9, label: "Question 9" }); }
+      // Q10
+      const q10 = document.getElementById("q10");
+      if (!isNonEmpty(q10)) { setBlockInvalid(blocks[9], true); setInvalid(q10, true); missing.push({ el: q10, label: "Question 10" }); }
+
+      if (missing.length) {
+        const first = missing[0];
+        msg(bottomError, "Please complete all required fields. Missing: " + missing.map(m => m.label).join(", "), "err");
+        scrollTo(first.el);
+        return false;
+      }
+      return true;
     }
 
-    // ---- Wire events ----
-    function wireProgressEvents(){
-      document.querySelectorAll('input[type="text"], textarea').forEach(el => {
-        el.addEventListener("input", () => {
-          if ((el.value||"").trim()) el.classList.remove("invalid");
-          updateProgress();
-        });
-        el.addEventListener("blur", () => {
-          if (!((el.value||"").trim())) el.classList.add("invalid");
-        });
+    function disableAllInputs() {
+      document.querySelectorAll("input, textarea, button").forEach(el => {
+        // keep the success message visible; disable all inputs
+        if (el.id !== "clearBtn") el.disabled = true;
       });
-      document.querySelectorAll('input[type="radio"]').forEach(el => {
-        el.addEventListener("change", () => {
-          const block = el.closest("[data-qblock]");
-          if (block) block.classList.remove("invalid-block");
-          updateProgress();
-        });
-      });
+      clearBtn.disabled = true;
     }
 
-    submitBtn.addEventListener("click", async () => {
-      formSuccess.classList.remove("show");
-      const ok = validateAll();
-      updateProgress();
-      if (!ok) return;
-
-      if (!FLOW_URL || FLOW_URL.includes("PASTE_YOUR_POWER_AUTOMATE")) {
-        formError.textContent = "Teacher: Power Automate URL not set yet.";
-        formError.classList.add("show");
-        scrollToEl(formError);
-        return;
-      }
-
-      // Lock UI while submitting
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Submitting...";
-
-      try{
-        const payload = buildPayload();
-        const res = await submitToFlow(payload);
-
-        if (!res.ok){
-          // Show more helpful errors when possible
-          let extra = "";
-          try { extra = await res.text(); } catch {}
-          throw new Error(`Submission failed (HTTP ${res.status}). ${extra}`.trim());
-        }
-
-        formSuccess.textContent = "✅ Submitted successfully! You can close this page now.";
-        formSuccess.classList.add("show");
-        scrollToEl(formSuccess);
-
-        // Optional: prevent double submits by disabling everything
-        document.querySelectorAll("input, textarea, button").forEach(el => {
-          if (el.id !== "clearBtn") el.disabled = true;
-        });
-      } catch(e){
-        console.error(e);
-        questionError.textContent = "❌ Submit failed. Please check your internet and try again. (If it keeps failing, tell your teacher.)";
-        questionError.classList.add("show");
-        scrollToEl(questionError);
-      } finally{
-        // If submit failed, re-enable button (if still valid)
-        if (!document.querySelectorAll("input, textarea, button")[0].disabled) {
-          submitBtn.textContent = "Submit";
-          updateProgress();
-        }
-      }
+    // Live progress events
+    document.querySelectorAll('input[type="text"], textarea').forEach(el => {
+      el.addEventListener("input", () => { if (isNonEmpty(el)) el.classList.remove("invalid"); updateProgress(); });
+      el.addEventListener("blur", () => { if (!isNonEmpty(el)) el.classList.add("invalid"); });
+    });
+    document.querySelectorAll('input[type="radio"]').forEach(el => {
+      el.addEventListener("change", () => {
+        const block = el.closest("[data-qblock]");
+        if (block) block.classList.remove("invalid-block");
+        updateProgress();
+      });
     });
 
     clearBtn.addEventListener("click", () => {
       if (!confirm("Clear all answers?")) return;
+
+      clearMsgs();
       document.querySelectorAll('input[type="text"], textarea').forEach(el => el.value = "");
       document.querySelectorAll('input[type="radio"]').forEach(el => el.checked = false);
-      clearMessages();
       document.querySelectorAll(".invalid").forEach(el => el.classList.remove("invalid"));
       document.querySelectorAll("[data-qblock].invalid-block").forEach(el => el.classList.remove("invalid-block"));
-      submitBtn.textContent = "Submit";
       updateProgress();
-      window.scrollTo({top:0, behavior:"smooth"});
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
-    // Init
-    wireProgressEvents();
+    submitBtn.addEventListener("click", async () => {
+      clearMsgs();
+      const ok = validateAll();
+      updateProgress();
+      if (!ok) return;
+
+      // lock button
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Submitting...";
+
+      try {
+        const payload = buildPayload();
+        await saveToFirestore(payload);
+
+        msg(topSuccess, "✅ Submitted successfully! You can close this page now.", "ok");
+        disableAllInputs();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+
+      } catch (e) {
+        console.error(e);
+        msg(topError, "❌ Submit failed. Please refresh and try again.", "err");
+        submitBtn.textContent = "Submit";
+        updateProgress();
+      }
+    });
+
+    // init
     updateProgress();
   </script>
 </body>
