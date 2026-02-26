@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Teacher Export Panel</title>
+<style>
+body{
+  font-family: Arial;
+  background:#0b1220;
+  color:white;
+  padding:40px;
+  text-align:center;
+}
+input{
+  padding:10px;
+  font-size:16px;
+  border-radius:8px;
+  border:none;
+}
+button{
+  padding:10px 16px;
+  font-size:16px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  margin-left:10px;
+}
+#panel{display:none;margin-top:30px;}
+</style>
+</head>
+<body>
+
+<h2>Teacher Export Panel</h2>
+<p>Enter passcode to download all submissions.</p>
+
+<input type="password" id="passcode" placeholder="Enter passcode">
+<button onclick="unlock()">Unlock</button>
+
+<div id="panel">
+  <h3>Download Submissions</h3>
+  <button onclick="downloadCSV()">Download Excel CSV</button>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCyjHGKmWqtvRn6ikJxWQeCAocbGIZqS3Y",
+  authDomain: "mmmm-7a485.firebaseapp.com",
+  projectId: "mmmm-7a485",
+  storageBucket: "mmmm-7a485.firebasestorage.app",
+  messagingSenderId: "177735973547",
+  appId: "1:177735973547:web:0d9ea6f476b886ab6195ee"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.unlock = function(){
+  const code = document.getElementById("passcode").value;
+  if(code === "FPL2026"){   // change this to your own password
+    document.getElementById("panel").style.display="block";
+  } else {
+    alert("Incorrect passcode");
+  }
+}
+
+window.downloadCSV = async function(){
+  const querySnapshot = await getDocs(collection(db, "submissions"));
+  let rows = [];
+
+  rows.push([
+    "First Name",
+    "Second Name",
+    "Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q8","Q9","Q10",
+    "Timestamp"
+  ]);
+
+  querySnapshot.forEach((doc) => {
+    const d = doc.data();
+    rows.push([
+      d.firstName || "",
+      d.secondName || "",
+      d.q1 || "",
+      d.q2 || "",
+      d.q3 || "",
+      d.q4 || "",
+      d.q5 || "",
+      d.q6 || "",
+      d.q7 || "",
+      d.q8 || "",
+      d.q9 || "",
+      d.q10 || "",
+      d.timestamp || ""
+    ]);
+  });
+
+  let csvContent = rows.map(e => e.join(",")).join("\n");
+
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "submissions.csv";
+  link.click();
+}
+</script>
+
+</body>
+</html>
